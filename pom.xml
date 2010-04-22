@@ -7,15 +7,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jiraquips</groupId>
     <artifactId>jiraquips</artifactId>
-    <version>1.0-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 
     <organization>
-        <name>Example Company</name>
-        <url>http://www.example.com/</url>
+        <name>Luke Halliwell</name>
+        <url>http://lukehalliwell.wordpress.com/</url>
     </organization>
 
-    <name>jiraquips</name>
-    <description>This is the com.jiraquips:jiraquips plugin for Atlassian JIRA.</description>
+    <name>Quips</name>
+    <description>Provides Bugzilla-style quips for Jira</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencies>
