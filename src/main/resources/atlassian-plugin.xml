@@ -3,5 +3,17 @@
         <description>${project.description}</description>
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
+		<application-version min="4.0"/>
     </plugin-info>
+	
+	<gadget key="quips-gadget" name="Quips Gadget"  location="gadget.xml"/>
+	
+	<resource type="download" name="i18n/ALL_ALL.xml" location="i18n/ALL_ALL.xml">
+		<param name="content-type" value="text/xml; charset=UTF-8"/>
+	</resource>
+	
+	<resource type="download" name="thumbnail.png" location="thumbnail.png">
+		<param name="content-type" value="image/png"/>
+	</resource>
+
 </atlassian-plugin>
