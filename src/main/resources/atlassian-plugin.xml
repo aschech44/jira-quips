@@ -8,6 +8,10 @@
 	
 	<gadget key="quips-gadget" name="Quips Gadget"  location="gadget.xml"/>
 	
+	<rest key="quips-rest" path="/quips" version="1.0">
+        <description>Provides quips services</description>
+    </rest>
+	
 	<resource type="download" name="i18n/ALL_ALL.xml" location="i18n/ALL_ALL.xml">
 		<param name="content-type" value="text/xml; charset=UTF-8"/>
 	</resource>
