@@ -8,7 +8,7 @@
 	
 	<gadget key="quips-gadget" name="Quips Gadget"  location="gadget.xml"/>
 	
-	<rest key="quips-rest" path="/quips" version="1.0">
+	<rest key="quips-rest" name="Quips REST service" path="/quips" version="1.0">
         <description>Provides quips services</description>
     </rest>
 	
