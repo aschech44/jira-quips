@@ -10,14 +10,16 @@
                 JIRA
             </Param>
         </Optional>
-        <Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.jiraquips.jiraquips/i18n/ALL_ALL.xml"/>
+		<Require feature="dynamic-height" /> 
+		<Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.jiraquips.jiraquips/i18n/ALL_ALL.xml"/>
     </ModulePrefs>
     <Content type="html" view="profile">
         <![CDATA[
     #requireResource("com.atlassian.jira.gadgets:common")
     #includeResources()
  
-    <h1>Hello from Luke's Atlassian Gadget Tutorial!</h1>
+    <div>
+    <h4>The Quips Gadget</h4>
  
     <script type="text/javascript">
         (function () {
@@ -26,32 +28,19 @@
 			view: {
 			template: function(args) {
 				var gadget = this;
-				 
-				// var projectList = AJS.$("<ul/>");
-				
 				gadget.getView().html(
-					AJS.$("<em/>").text(args.projectData.value));
-				 
-				 /*
-				AJS.$(args.projectData.projects).each(function() {
-					projectList.append(
-						AJS.$("<li/>").append(
-							AJS.$("<a/>").attr({
-								target: "_parent",
-								title: gadgets.util.escapeString(this.description),
-								href: "__ATLASSIAN_BASE_URL__" + "/browse/" + this.key
-								}).text(this.name)       
-							)
-					);
-				});
-				 
-				gadget.getView().html(projectList);*/
+					AJS.$("<em/>").text(args.quip.value));
+					
+				// Calculation of gadget height seems dodgy, it always chops off the bottom half line ... so,
+				// total hack, but I just stick an extra bit of a line on at the end.
+				// Not sure if I'm misusing the API or what.
+				gadget.getView().append(AJS.$("<p/>").text("."));
 			},
 			args: [{
-				key: "projectData",
+				key: "quip",
 				ajaxOptions: function() {
 					return {
-						url: "/rest/quips/1.0/quip.json"
+						url: "/rest/quips/1.0/quips.json?key=random"
 					};
 				}
 			}]
@@ -59,6 +48,7 @@
 			});
 			})();
     </script>
+	</div>
     ]]>
-    </Content>
+	</Content>
 </Module>

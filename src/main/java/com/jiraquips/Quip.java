@@ -8,18 +8,26 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "message")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Quip {
-    @XmlAttribute
+    @XmlAttribute(name = "key")
     private String key;
 
     @XmlElement(name = "value")
     private String message;
+	
+	@XmlElement(name = "timestamp")
+	private long timestamp;
+	
+	@XmlElement(name = "author")
+	private String author;
 
     public Quip() {
     }
 
-    public Quip(String key, String message) {
+    public Quip(String key, long timestamp, String author, String message) {
         this.key = key;
         this.message = message;
+		this.timestamp = timestamp;
+		this.author = author;
     }
 
     public String getKey() {
@@ -37,4 +45,20 @@ public class Quip {
     public void setMessage(String message) {
         this.message = message;
     }
+	
+	public long getTimestamp() {
+		return timestamp;
+	}
+	
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+	public String getAuthor() {
+		return author;
+	}
+	
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 }
