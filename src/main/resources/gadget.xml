@@ -10,7 +10,7 @@
                 JIRA
             </Param>
         </Optional>
-		<Require feature="dynamic-height" /> 
+		<Require feature="dynamic-height" />
 		<Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.jiraquips.jiraquips/i18n/ALL_ALL.xml"/>
     </ModulePrefs>
     <Content type="html" view="profile">
@@ -28,9 +28,36 @@
 			view: {
 			template: function(args) {
 				var gadget = this;
+				
+				var allQuipsResponse = function(response) {
+					AJS.$("#allQuips").empty();
+					var table = AJS.$('<table id="myTable" cellspacing=2 cellpadding=2></table>');
+					// var table = AJS.$("#allQuips").append("<table />").addClass('testclass');
+					for (var quip in response.data.quips) {
+						var tr = AJS.$("<tr />");
+						tr.append("<td><em>" + response.data.quips[quip].value + '</em></td>');
+						tr.append("<td>" + response.data.quips[quip].author + '</td>');
+						tr.append("<td>" + response.data.quips[quip].timestamp + '</td>');
+						table.append(tr);
+					}
+					AJS.$("#allQuips").append(table);
+					
+					gadgets.window.adjustHeight();
+				}
+				
+				var showAllQuips = function() {
+					var params = {};
+					params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+					params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+					gadgets.io.makeRequest("__ATLASSIAN_BASE_URL__/rest/quips/1.0/quips.json", allQuipsResponse, params);
+				}
+				
 				gadget.getView().html(
 					AJS.$("<em/>").text(args.quip.value));
 					
+				gadget.getView().append(AJS.$("<br />"));
+				gadget.getView().append(AJS.$("<a/>").text("View whole quip list").click(showAllQuips));
+				
 				// Calculation of gadget height seems dodgy, it always chops off the bottom half line ... so,
 				// total hack, but I just stick an extra bit of a line on at the end.
 				// Not sure if I'm misusing the API or what.
@@ -49,6 +76,7 @@
 			})();
     </script>
 	</div>
+	<div id="allQuips"></div>
     ]]>
 	</Content>
 </Module>
