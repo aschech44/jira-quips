@@ -1,6 +1,8 @@
 package com.jiraquips;
 
 import javax.xml.bind.annotation.*;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * A message returned from the {@link MessageResource}
@@ -14,8 +16,13 @@ public class Quip {
     @XmlElement(name = "value")
     private String message;
 	
+	// Stored internally but not presented in JSON messages - the cached string version
+	// is used below (saves worrying about whether Java 'long' representation is same as
+	// Javascript, and browser timezone etc).
+	private long timestampMillis;
+	
 	@XmlElement(name = "timestamp")
-	private long timestamp;
+	private String timestamp;
 	
 	@XmlElement(name = "author")
 	private String author;
@@ -26,8 +33,9 @@ public class Quip {
     public Quip(String key, long timestamp, String author, String message) {
         this.key = key;
         this.message = message;
-		this.timestamp = timestamp;
 		this.author = author;
+		
+		setTimestamp(timestamp); // handles setting up the cached string.
     }
 
     public String getKey() {
@@ -47,11 +55,17 @@ public class Quip {
     }
 	
 	public long getTimestamp() {
-		return timestamp;
+		return timestampMillis;
 	}
 	
 	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
+		this.timestampMillis = timestamp;
+		
+		Date date = new Date();
+		date.setTime(timestampMillis);
+		
+		SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yy");
+		this.timestamp = dateformat.format(date);
 	}
 	
 	public String getAuthor() {

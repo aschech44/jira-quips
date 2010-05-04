@@ -13,12 +13,14 @@ import com.opensymphony.user.User;
 
 public class QuipsCollection
 {
-	public void addQuip(User author, String quip)
+	public Quip addQuip(User author, String quip)
 	{
 		Calendar now = Calendar.getInstance();
 		String key = Long.toString(now.getTimeInMillis()) + "-" + author.getName();
 		PropertySet ps = getQuipsPropertySet();
 		ps.setText(key, quip);
+		
+		return new Quip(key, now.getTimeInMillis(), author.getName(), quip);
 	}
 	
 	public void deleteQuip(String key)
@@ -43,9 +45,9 @@ public class QuipsCollection
 			rtn.put(key, new Quip(key, millis, author, text));
 		}
 		
-		rtn.put("1", new Quip("1", 0, "luke", "Hardcoded quip 1"));
-		rtn.put("2", new Quip("2", 0, "luke", "Hardcoded quip 2"));
-		rtn.put("3", new Quip("3", 0, "luke", "Hardcoded quip 3"));
+		rtn.put("1", new Quip("1", 100000000, "luke", "Hardcoded quip 1"));
+		rtn.put("2", new Quip("2", 200000000, "luke", "Hardcoded quip 2"));
+		rtn.put("3", new Quip("3", 300000000, "luke", "Hardcoded quip 3"));
 		
 		return rtn;
 	}
