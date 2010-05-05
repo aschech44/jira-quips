@@ -2,6 +2,8 @@ package com.jiraquips;
 
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import com.atlassian.jira.security.JiraAuthenticationContext;
+import com.atlassian.jira.security.Permissions;
+import com.atlassian.jira.ManagerFactory;
 import com.opensymphony.user.User;
 
 import java.util.Map;
@@ -45,7 +47,7 @@ public class QuipsResource {
 		}
         else {
 			// Get *all* quips
-			QuipList rtn = new QuipList(new ArrayList<Quip>(new QuipsCollection().getQuips().values()));
+			QuipList rtn = new QuipList(new ArrayList<Quip>(new QuipsCollection().getQuips().values()), canDelete());
 			return Response.ok(rtn).build();
 		}
     }
@@ -75,6 +77,25 @@ public class QuipsResource {
     {
         return Response.ok(getQuipFromKey(key)).build();
     }
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/{key}/delete")
+	public Response deleteQuip(@PathParam("key") String key) {
+		if (canDelete()) {
+			new QuipsCollection().deleteQuip(key);
+		}
+		return Response.noContent().build();
+	}
+	
+	private boolean canDelete() {
+		User user = authenticationContext.getUser();
+		if (user != null)
+		{
+			return ManagerFactory.getPermissionManager().hasPermission(Permissions.ADMINISTER, user);
+		}
+		return false;
+	}
 
     private Quip getQuipFromKey(String key) {
 		Map quips = new QuipsCollection().getQuips();

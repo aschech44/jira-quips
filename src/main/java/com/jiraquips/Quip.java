@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 @XmlRootElement(name = "message")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Quip {
-    @XmlAttribute(name = "key")
+    @XmlElement(name = "key")
     private String key;
 
     @XmlElement(name = "value")

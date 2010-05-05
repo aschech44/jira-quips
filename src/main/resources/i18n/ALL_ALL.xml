@@ -1,4 +1,4 @@
 <messagebundle>
-    <msg name="gadget.title">Quips Gadget</msg>
+    <msg name="gadget.title">Quips</msg>
     <msg name="gadget.description">Gadget to display a random quip</msg>
 </messagebundle>

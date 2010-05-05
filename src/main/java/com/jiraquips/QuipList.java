@@ -24,10 +24,14 @@ class QuipList
 	{
 	}
 	
-	public QuipList(List<Quip> quips)
+	public QuipList(List<Quip> quips, boolean canDelete)
 	{
 		this.quips = quips;
+		this.canDelete = canDelete;
 	}
+	
+	@XmlElement
+	private boolean canDelete;
 	
 	@XmlElement
 	private List<Quip> quips;

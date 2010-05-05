@@ -52,6 +52,12 @@
 					gadgets.window.adjustHeight();
 				}
 				
+				var hideQuipList = function() {
+					AJS.$("#allQuips").empty();
+					gadgets.window.adjustHeight();
+					return true;
+				}
+				
 				var allQuipsResponse = function(response) {
 					AJS.$("#allQuips").empty();
 					var table = AJS.$('<table id="myTable" cellspacing=2 cellpadding=2></table>');
@@ -60,6 +66,13 @@
 						tr.append("<td><em>" + response.data.quips[quip].value + '</em></td>');
 						tr.append("<td>" + response.data.quips[quip].author + '</td>');
 						tr.append("<td>" + response.data.quips[quip].timestamp + '</td>');
+						if (response.data.canDelete == "true") {
+							var deleteForm = AJS.$("<form action='__ATLASSIAN_BASE_URL__/rest/quips/1.0/quips/" + response.data.quips[quip].key + "/delete' method='POST' />").submit(hideQuipList);
+							deleteForm.append(AJS.$("<input type='submit' value='Delete' />"));
+							var deleteFormTD = AJS.$("<td />");
+							deleteFormTD.append(deleteForm);
+							tr.append(deleteFormTD);
+						}
 						table.append(tr);
 					}
 					AJS.$("#allQuips").append(table);
@@ -74,7 +87,7 @@
 					gadgets.io.makeRequest("__ATLASSIAN_BASE_URL__/rest/quips/1.0/quips.json", allQuipsResponse, params);
 				}
 	
-				gadget.getView().html(AJS.$("<h4>The Quips Gadget</h4>"));
+				gadget.getView().html();//AJS.$("<h4>The Quips Gadget</h4>"));
 				
 				var form = AJS.$("<form id='addQuipForm' />");
 				form.append(AJS.$("<textarea name='quip' id='addQuipText' style='resize:none;' type='text' rows='3' cols='40'></textarea>"));
@@ -93,7 +106,7 @@
 				gadget.getView().append(AJS.$("<br />"));
 				gadget.getView().append(AJS.$("<a/>").text("Add a quip").click(showAddQuip));
 				
-				gadget.getView().append(AJS.$("<span>|</span>"));
+				gadget.getView().append(AJS.$("<span> | </span>"));
 				gadget.getView().append(AJS.$("<a/>").text("View whole quip list").click(showAllQuips));
 			},
 			args: [{

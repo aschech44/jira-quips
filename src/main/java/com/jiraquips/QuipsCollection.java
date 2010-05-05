@@ -45,10 +45,6 @@ public class QuipsCollection
 			rtn.put(key, new Quip(key, millis, author, text));
 		}
 		
-		rtn.put("1", new Quip("1", 100000000, "luke", "Hardcoded quip 1"));
-		rtn.put("2", new Quip("2", 200000000, "luke", "Hardcoded quip 2"));
-		rtn.put("3", new Quip("3", 300000000, "luke", "Hardcoded quip 3"));
-		
 		return rtn;
 	}
 	
