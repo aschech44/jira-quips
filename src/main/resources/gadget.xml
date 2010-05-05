@@ -59,23 +59,39 @@
 					return true;
 				}
 				
+				var makeTrForQuip = function(quip, canDelete) {
+					var tr = AJS.$("<tr />");
+					tr.append("<td><em>" + quip.value + '</em></td>');
+					tr.append("<td>" + quip.author + '</td>');
+					tr.append("<td>" + quip.timestamp + '</td>');
+					if (canDelete == "true") {
+						var deleteForm = AJS.$("<form action='__ATLASSIAN_BASE_URL__/rest/quips/1.0/quips/" + quip.key + "/delete' method='POST' />").submit(hideQuipList);
+						deleteForm.append(AJS.$("<input type='submit' value='Delete' />"));
+						var deleteFormTD = AJS.$("<td />");
+						deleteFormTD.append(deleteForm);
+						tr.append(deleteFormTD);
+					}
+					return tr;
+				}
+				
 				var allQuipsResponse = function(response) {
 					AJS.$("#allQuips").empty();
 					var table = AJS.$('<table id="myTable" cellspacing=2 cellpadding=2></table>');
-					for (var quip in response.data.quips) {
-						var tr = AJS.$("<tr />");
-						tr.append("<td><em>" + response.data.quips[quip].value + '</em></td>');
-						tr.append("<td>" + response.data.quips[quip].author + '</td>');
-						tr.append("<td>" + response.data.quips[quip].timestamp + '</td>');
-						if (response.data.canDelete == "true") {
-							var deleteForm = AJS.$("<form action='__ATLASSIAN_BASE_URL__/rest/quips/1.0/quips/" + response.data.quips[quip].key + "/delete' method='POST' />").submit(hideQuipList);
-							deleteForm.append(AJS.$("<input type='submit' value='Delete' />"));
-							var deleteFormTD = AJS.$("<td />");
-							deleteFormTD.append(deleteForm);
-							tr.append(deleteFormTD);
+					
+					// This check is here because annoyingly, if there's just 1 quip in the system, that quip is not wrapped inside a list.  So iterating over
+					// everything in 'quips' would iterate over the properties of that one quip, and give very odd results.
+					if (typeof response.data.quips.key == 'undefined') {
+						for (var quip in response.data.quips) {
+							var tr = makeTrForQuip(response.data.quips[quip], response.data.canDelete);
+							table.append(tr);
 						}
+					}
+					else {
+						// Case of 1 quip: 'quips' is actually a quip, not a list
+						var tr = makeTrForQuip(response.data.quips, response.data.canDelete);
 						table.append(tr);
 					}
+					
 					AJS.$("#allQuips").append(table);
 					
 					gadgets.window.adjustHeight();

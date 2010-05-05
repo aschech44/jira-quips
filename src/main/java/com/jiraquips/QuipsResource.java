@@ -100,8 +100,13 @@ public class QuipsResource {
     private Quip getQuipFromKey(String key) {
 		Map quips = new QuipsCollection().getQuips();
 		if (key.equals("random")) {
-			Random generator = new Random();
-			return (Quip)quips.values().toArray()[generator.nextInt(quips.size())];
+			if (quips.size() > 0) {
+				Random generator = new Random();
+				return (Quip)quips.values().toArray()[generator.nextInt(quips.size())];
+			}
+			else {
+				return new Quip("", 0, "", "No quips have been defined yet");
+			}
 		}
 		else {
 			return (Quip)quips.get(key);
