@@ -54,7 +54,7 @@
 				}
 				
 				var hideQuipList = function() {
-					AJS.$("#allQuips").empty();
+					AJS.$("#allQuips").hide();
 					gadgets.window.adjustHeight();
 					return true;
 				}
