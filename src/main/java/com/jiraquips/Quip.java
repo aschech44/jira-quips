@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
  */
 @XmlRootElement(name = "message")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Quip {
+public class Quip implements Comparable<Quip> {
     @XmlElement(name = "key")
     private String key;
 
@@ -37,6 +37,10 @@ public class Quip {
 		
 		setTimestamp(timestamp); // handles setting up the cached string.
     }
+	
+	public int compareTo(Quip other) {
+		return key.compareTo(other.key);
+	}
 
     public String getKey() {
         return key;

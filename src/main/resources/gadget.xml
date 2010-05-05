@@ -49,6 +49,7 @@
 				
 				var showAddQuip = function() {
 					AJS.$("#addQuip").show();
+					AJS.$("#allQuips").empty();
 					gadgets.window.adjustHeight();
 				}
 				

@@ -4,6 +4,7 @@ import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 
 import java.util.Map;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ class QuipList
 	
 	public QuipList(List<Quip> quips, boolean canDelete)
 	{
+		Collections.sort(quips);
 		this.quips = quips;
 		this.canDelete = canDelete;
 	}
