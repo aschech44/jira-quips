@@ -18,8 +18,6 @@
     #requireResource("com.atlassian.jira.gadgets:common")
     #includeResources()
  
-    <div>
-     
     <script type="text/javascript">
         (function () {
 			var gadget = AJS.Gadget({
@@ -76,6 +74,7 @@
 				
 				var allQuipsResponse = function(response) {
 					AJS.$("#allQuips").empty();
+					AJS.$("#allQuips").show();
 					var table = AJS.$('<table id="myTable" cellspacing=2 cellpadding=2></table>');
 					
 					// This check is here because annoyingly, if there's just 1 quip in the system, that quip is not wrapped inside a list.  So iterating over
@@ -138,6 +137,7 @@
 			});
 			})();
     </script>
+	<div>
 	</div>
 	<div id="allQuips"></div>
     ]]>
